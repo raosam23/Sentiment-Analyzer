@@ -39,18 +39,20 @@ def create_pie_chart(request, positive, negative, neutral):
     image_file_path = os.path.join(piechart_directory, image_file_name)
 
     if default_storage.exists(image_file_path):
-        image_file_path = default_storage.path(image_file_path)
-    else:
-        # Save figure as BytesIO object
-        image_data = io.BytesIO()
-        plt.savefig(image_data, format='png')
-        image_data.seek(0)
+        default_storage.delete(image_file_path)
 
-        # Create ContentFile from BytesIO object
-        content_file = ContentFile(image_data.read())
-        image_file_path = default_storage.save(image_file_path, content_file)
-        plt.close(fig)
+    # Save figure as BytesIO object
+    image_data = io.BytesIO()
+    plt.savefig(image_data, format='png')
+    image_data.seek(0)
+
+    # Create ContentFile from BytesIO object
+    content_file = ContentFile(image_data.read())
+    image_file_path = default_storage.save(image_file_path, content_file)
+    plt.close(fig)
+
     return image_file_name
+
 
 def preprocess_text(text):
     stop_words = set(stopwords.words('english'))
@@ -89,8 +91,7 @@ def computing_support_vector(request):
 
     y_pred = svm.predict(X_test)
 
-
-    result_data_svm = pd.concat([test_data, pd.DataFrame({'sentiment' : y_pred})], axis=1)
+    result_data_svm = pd.concat([test_data, pd.DataFrame({'sentiment': y_pred})], axis=1)
 
     csv_data = result_data_svm.to_csv(index=False)
     csv_file = ContentFile(csv_data.encode())
@@ -100,16 +101,17 @@ def computing_support_vector(request):
     sentiment_file_directory = os.path.join(sentiment_directory, sentiment_file_name)
 
     if default_storage.exists(sentiment_file_directory):
-        file_path = default_storage.path(sentiment_file_directory)
+        default_storage.delete(sentiment_file_directory)
 
-    else:
-        file_path = default_storage.save(sentiment_file_directory, csv_file)
+    file_path = default_storage.save(sentiment_file_directory, csv_file)
 
-    positive = round(((sum(y_pred == 'positive')/len(y_pred)) * 100), 2)
-    negative = round(((sum(y_pred == 'negative')/len(y_pred)) * 100), 2)
-    neutral = round(((sum(y_pred == 'neutral')/len(y_pred)) * 100), 2)
+    positive = round(((sum(y_pred == 'positive') / len(y_pred)) * 100), 2)
+    negative = round(((sum(y_pred == 'negative') / len(y_pred)) * 100), 2)
+    neutral = round(((sum(y_pred == 'neutral') / len(y_pred)) * 100), 2)
     image_file_name = create_pie_chart(request, positive, negative, neutral)
-    return render(request, 'support_vector_machine/sentiment_results.html', {"image_file_name" : image_file_name})
+    return render(request, 'support_vector_machine/sentiment_results.html', {"image_file_name": image_file_name})
+
+
 # Create your views here.
 
 def support_vector(request) -> render:
