@@ -1,0 +1,9 @@
+{% extends 'naive_bayes_classifier/template.html' %}
+{% block title %}Sentiment Analyzer | Naive Bayes Classifier{% endblock title %}
+{% block body %}
+<h3>The file chosen is {{file_name}}</h3>
+<h5>Click here to compute sentiments using Naive Bayes</h5>
+<form action="compute_naive_bayes" method="get">
+    <button class="btn btn-primary">Compute Sentiments</button>
+</form>
+{% endblock body %}

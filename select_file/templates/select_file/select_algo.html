@@ -1,0 +1,14 @@
+{% extends 'select_file/template.html' %}
+{% block title %}Sentiment Analyzer | Select an algorithm{% endblock title %}
+{% block body %}
+<h3>Choose an algorithm</h3>
+<form action="/naive_bayes" method="get">
+    <button class="btn btn-primary">Naive Bayes Classifier</button>
+</form>
+<form action="/support_vector" method="get">
+    <button class="btn btn-primary">Support Vector Machine</button>
+</form>
+<form action="/" method="get">
+    <button class="btn btn-primary">Home</button>
+</form>
+{% endblock body %}

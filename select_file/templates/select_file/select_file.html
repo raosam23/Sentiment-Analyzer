@@ -1,0 +1,24 @@
+{% extends 'select_file/template.html' %}
+{% block title %}Sentiment Analyzer | Select a file{% endblock title %}
+{% block body %}
+{% csrf_token %}
+<h3>Select a scheme to begin with</h3>
+<br />
+<h4>Choose any one of the schemes to check their sentiments</h4>
+<div>
+  <div>
+    {% if csv_file_names|length == 0 %}
+      <h6>No File here to select</h6>
+    {% endif%}
+    {% for file_name in csv_file_names %}
+    <div>
+      <form action="selected" method="get">
+        <button class="btn btn-primary" type="submit" name="file_name" value="{{ file_name }}">
+          #{{ file_name|slice:"-4" }}
+        </button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock body %}

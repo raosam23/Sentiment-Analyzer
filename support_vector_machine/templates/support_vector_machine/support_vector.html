@@ -1,0 +1,9 @@
+{% extends 'support_vector_machine/template.html' %}
+{% block title %}Sentiment Analyzer | Support Vector Machine{% endblock title %}
+{% block body %}
+<h3>The file chosen is {{file_name}}</h3>
+<h5>Click here to compute sentiments using Support Vector</h5>
+<form action="compute_support_vector" method="get">
+    <button class="btn btn-primary">Compute Sentiments</button>
+</form>
+{% endblock body %}

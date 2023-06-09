@@ -1,0 +1,16 @@
+{% extends 'naive_bayes_classifier/template.html' %}
+{% block title %}Sentiment Analyzer | Support Vector sentiment results{% endblock title %}
+{% block body %}
+    <h3>Support Vector Results</h3>
+    <img src="http://127.0.0.1:8000/media/piechart/{{image_file_name}}" alt="Support Vector Results" />
+    <form action="/select_file/select_algo" method="get">
+        <button class="btn btn-primary">
+            Go back
+        </button>
+    </form>
+    <form action="/" method="get">
+        <button class="btn btn-primary">
+            Home
+        </button>
+    </form>
+{% endblock body %}
